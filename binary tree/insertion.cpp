@@ -104,13 +104,26 @@ void tree<S>::postorder(node<S>* p)				//tree traversing using postorder approac
 int main(int argc, char const *argv[])
 {
 	tree<int> obj;								//tree object
-	obj.insert(5);								//some initialisation.You can also insert by asking to the user but i did so to make the things more clear
+	obj.insert(5);	
+	cout<<"after inserting 5\n";							//some initialisation.You can also insert by asking to the user but i did so to make the things more clear
+	obj.postorder(obj.getroot());
 	obj.insert(2);
+	cout<<"\nafter inserting 2\n";
+	obj.postorder(obj.getroot());
 	obj.insert(8);
+	cout<<"\nafter inserting 8\n";
+	obj.postorder(obj.getroot());
 	obj.insert(4);
+	cout<<"\nafter inserting 4\n";
+	obj.postorder(obj.getroot());
 	obj.insert(1);
+	cout<<"\nafter inserting 1\n";
+	obj.postorder(obj.getroot());
 	obj.insert(7);
+	cout<<"\nafter inserting 7\n";
+	obj.postorder(obj.getroot());
 	obj.insert(10);
+	cout<<"\nafter inserting 8\n";
 	obj.postorder(obj.getroot());				//postorder traversel is being called in which the root of the tree is passed
 	return 0;
 }

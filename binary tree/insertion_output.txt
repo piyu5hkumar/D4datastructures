@@ -1,0 +1,17 @@
+after inserting 5
+5
+after inserting 2
+2       5
+after inserting 8
+2       8       5
+after inserting 4
+4       2       8       5
+after inserting 1
+1       4       2       8       5
+after inserting 7
+1       4       2       7       8       5
+after inserting 8
+1       4       2       7       10      8       5
+--------------------------------
+Process exited after 0.06971 seconds with return value 0
+Press any key to continue . . .
