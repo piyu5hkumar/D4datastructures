@@ -30,9 +30,9 @@ node<T>::node()
 	left=right=NULL;
 }
 
-/*class tree inherting node class and having a root object of node as its class member */
+/*class tree inheriting node class and having a root object of the node as its class member */
 template<class S>
-class tree :public node<S>		
+class tree: public node<S>		
 {
 	private:
 		
