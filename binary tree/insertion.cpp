@@ -1,11 +1,16 @@
 #include<iostream>
 
-/*C++ program to remove duplicate elements from the binary search tree*/
+/*
+
+C++ program to remove duplicate elements from the binary search tree
+
+*/
 
 using namespace std;
 
+/*a base class is created which contain the data of every node in the tree*/
 template<class T>
-class node						// 
+class node						
 {
 	public:
 	
@@ -17,8 +22,7 @@ class node						//
 		node();
 };
 
-/*a base class is created which contain the data of every node in the tree*/
-
+/*construtcor of the base class*/
 template<class T>
 node<T>::node()
 {
@@ -26,8 +30,7 @@ node<T>::node()
 	left=right=NULL;
 }
 
-/*construtcor of the base class*/
-
+/*class tree inherting node class and having a root object of node as its class member */
 template<class S>
 class tree :public node<S>		
 {
@@ -40,28 +43,24 @@ class tree :public node<S>
 		node<S>* getroot();
 		void insert(S);
 		void postorder(node<S> *);
-		
-
 };
 
-/*class tree inherting node class and having a root object of node as its class member */
 
+/*tree class default constructor.As soon as the object will be made its root will be pointed to NULL*/
 template<class S>
 tree<S>::tree()							
 {
 	root=NULL;
 }
 
-/*tree class default constructor.As soon as the object will be made its root will be pointed to NULL*/
-
+/*tree class parameterized constructor ,just in case if we know the value of the node at its declaration*/
 template<class S>
 node<S>* tree<S>::getroot()				
 {
 	return root;
 }
 
-/*tree class parameterized constructor ,just in case if we know the value of the node at its declaration*/
-
+/*Insertion member function*/
 template<class S>
 void tree <S>:: insert(S value)			
 {
@@ -97,7 +96,7 @@ void tree <S>:: insert(S value)
 			}
 		}
 
-		/*last node is comparison*/ 
+		/*last node in comparison*/ 
 
 		/*if the data is more make the new node as right child*/
 		if (temp->data > prev->data)			
