@@ -1,8 +1,11 @@
 #include<iostream>
+
+/*C++ program to remove duplicate elements from the binary search tree*/
+
 using namespace std;
 
 template<class T>
-class node						// a base class is created which contain the data of every node in the tree
+class node						// 
 {
 	public:
 	
@@ -14,6 +17,8 @@ class node						// a base class is created which contain the data of every node 
 		node();
 };
 
+/*a base class is created which contain the data of every node in the tree*/
+
 template<class T>
 node<T>::node()
 {
@@ -21,9 +26,10 @@ node<T>::node()
 	left=right=NULL;
 }
 
+/*construtcor of the base class*/
 
 template<class S>
-class tree :public node<S>		// tree is being made which contains a root for every tree object
+class tree :public node<S>		
 {
 	private:
 		
@@ -38,27 +44,36 @@ class tree :public node<S>		// tree is being made which contains a root for ever
 
 };
 
+/*class tree inherting node class and having a root object of node as its class member */
+
 template<class S>
-tree<S>::tree()							//as soon as the object will be made its root will be pointed to NULL
+tree<S>::tree()							
 {
 	root=NULL;
 }
 
+/*tree class default constructor.As soon as the object will be made its root will be pointed to NULL*/
+
 template<class S>
-node<S>* tree<S>::getroot()				//this will give the pointer to the root
+node<S>* tree<S>::getroot()				
 {
 	return root;
 }
 
+/*tree class parameterized constructor ,just in case if we know the value of the node at its declaration*/
+
 template<class S>
-void tree <S>:: insert(S value)			//insertion part
+void tree <S>:: insert(S value)			
 {
 	node<S> *temp = new node<S>;
 	temp->data = value;
+
+	/*if root is not pointing to anything ,that is tree is not existing*/
 	if(root == NULL)
 	{
 		root=temp;
 	}
+
 	else
 	{
 		node<S> *current=root;					
@@ -66,31 +81,42 @@ void tree <S>:: insert(S value)			//insertion part
 		
 		while(current)
 		{
-			prev=current;						//this will store the last node visited because at the end the pointer will point to the null
-			if(temp->data > current->data)		// if the inserted data is greater than the available data in the node move to right sub tree
+			/*storing the last node visited because at the end the pointer will point to the null*/
+			prev=current;	
+
+			/* If item is greater than current node go to right sub tree */					
+			if(temp->data > current->data)		
 			{
 				current=current->right;
 			}
+
+			/* If item is samller than current node go to left sub tree */
 			else
 			{
-				current=current->left;			// if the inserted data is greater than the available data in the node move to left sub tree
+				current=current->left;			
 			}
 		}
 
-		if (temp->data > prev->data)			//last node is compared if the data is more make the new node as right child
+		/*last node is comparison*/ 
+
+		/*if the data is more make the new node as right child*/
+		if (temp->data > prev->data)			
 		{
 			prev->right = temp;
 		}
+
+		/*if new node data is less make it left child*/
 		else
 		{
-			prev->left = temp;					//if new node data is less make it left child
+			prev->left = temp;					
 		}
 
 	}
 } 
 
+/*tree traversing using postorder approach*/
 template<class S>
-void tree<S>::postorder(node<S>* p)				//tree traversing using postorder approach
+void tree<S>::postorder(node<S>* p)				
 {
 	if(p==NULL)
 	{
@@ -101,29 +127,42 @@ void tree<S>::postorder(node<S>* p)				//tree traversing using postorder approac
 	cout<<p->data<<"\t";
 }
 
+/*main function*/
 int main(int argc, char const *argv[])
 {
-	tree<int> obj;								//tree object
+	/*tree object*/
+	tree<int> obj;
+
+	/*some initialisation.You can also insert by asking to the user but i did so to make the things more clear*/
 	obj.insert(5);	
-	cout<<"after inserting 5\n";							//some initialisation.You can also insert by asking to the user but i did so to make the things more clear
+	cout<<"after inserting 5\n";
+
+	/*calling postorder everytime just to assure that data is inserted*/
 	obj.postorder(obj.getroot());
+	
 	obj.insert(2);
 	cout<<"\nafter inserting 2\n";
 	obj.postorder(obj.getroot());
+	
 	obj.insert(8);
 	cout<<"\nafter inserting 8\n";
 	obj.postorder(obj.getroot());
+	
 	obj.insert(4);
 	cout<<"\nafter inserting 4\n";
 	obj.postorder(obj.getroot());
+	
 	obj.insert(1);
 	cout<<"\nafter inserting 1\n";
 	obj.postorder(obj.getroot());
+	
 	obj.insert(7);
 	cout<<"\nafter inserting 7\n";
 	obj.postorder(obj.getroot());
+	
 	obj.insert(10);
 	cout<<"\nafter inserting 8\n";
-	obj.postorder(obj.getroot());				//postorder traversel is being called in which the root of the tree is passed
+	obj.postorder(obj.getroot());
+
 	return 0;
 }
