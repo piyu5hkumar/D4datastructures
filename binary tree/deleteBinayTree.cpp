@@ -70,7 +70,7 @@ void tree<C>::createTree()
 	root->right->right=new node<C>(1);
 }
 
-/* Inorder approach to delete the full tree */
+/* Postorder approach to delete the full tree */
 template<class C>
 void tree<C> :: del_tree(node<C> *r)
 {
