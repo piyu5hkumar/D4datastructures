@@ -71,7 +71,7 @@ void tree<C>::createTree()
 	root->right->right=new node<C>(1);
 }
 
-/* A recursive function to find the ancestor of a node */
+/* Inorder approach to delete the full tree */
 template<class C>
 void tree<C> :: del_tree(node<C> *r)
 {
