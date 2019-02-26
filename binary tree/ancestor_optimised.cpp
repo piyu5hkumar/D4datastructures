@@ -53,6 +53,8 @@ tree<C> :: tree()
 	root=NULL;
 }
 
+//*tree class parameterized constructor.As soon as the object will be made its data will be assigned the passed value and the pointer will point to NULL*/
+
 /* this will return the root of the tree's object */
 
 template<class C>
@@ -61,7 +63,7 @@ node<C>* tree<C> :: getRoot()
 	return root;
 }
 
-/* this will return the ancestor list of the node we just traversed and checked */
+/* this will return the ancestor list of the node we just traveressed and checked */
 
 template<class C>
 stack<C> tree<C>::getAncestorList()
@@ -69,7 +71,7 @@ stack<C> tree<C>::getAncestorList()
 	return ancestor_list;
 }
 
-/* this will create the tree in the example we just shown */
+/* this will create the tree in the example we just showed */
 template<class C>
 void tree<C>::createTree()
 {
@@ -89,32 +91,38 @@ bool tree<C> :: ancestor(node<C> *r,C value)
 {
 
 /* check if the current root is NULL or not*/	
-	
 	if(r==NULL)
 	{
 		return false;
 	}
-
 /* this will check if the current node is value or not */
-	
 	else if(r->data == value)
 	{
 		return true;
 	}
-
-/* recursive section where we OR the bool value from the left and right subtree of the root */ 
-	
-	else if(ancestor(r->left,value) | ancestor(r->right,value) )
+/* recursive section */ 
+	else
 	{
-		ancestor_list.push(r->data);
-		return true;
-	}
-
-/* if nothing found or the above condition is also false */
-
-	else 
-	{
-		return false;
+		bool left,right;
+		left=ancestor(r->left,value);
+		if(left)
+		{
+			ancestor_list.push(r->data);
+			return true;
+		}
+		else
+		{
+			right=ancestor(r->right,value);
+			if(right)
+			{
+				ancestor_list.push(r->data);
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
 	}
 }
 
@@ -126,23 +134,15 @@ int main()
 	
 	obj.createTree();
 	obj.ancestor(obj.getRoot(),value);
-
-/* a_list will store the ancestor list stack */
-
 	stack<int> a_list = obj.getAncestorList();
 
-/* if there is no ancestor then there might a case of no node found or the root being the node that was the node to be searched upon */
-	
 	if(a_list.size()==0)
 	{
 		cout<<"no ancestor found\n";
 	}
-
-/* if there are ancesotor just show them */
-
 	else
 	{
-		cout<<"\nancestors of "<<value<<" are following\n";
+		cout<<"\nancestors of "<<value<<" are following (age wise)\n";
 		while(a_list.size()!=0)
 		{
 			cout<< a_list.top()<<"\n";
