@@ -3,11 +3,12 @@
 /*
 
 C++ program to find K'th largest element in binary search tree when tree modification is not allowed
+MORE OPTIMISED APPROACH
 
 */
 
 using namespace std;
-
+void breaker();
 /*a base class is created which contain the data of every node in the tree*/
 template<class T>
 class node						
@@ -42,7 +43,7 @@ class tree: public node<S>
 		tree();
 		node<S>* getroot();
 		void insert(S);
-		bool reverse_Inorder(node<S> *,const int&);
+		bool reverse_Inorder(node<S> *,const int&,bool&);
 };
 
 
@@ -115,29 +116,32 @@ void tree <S>:: insert(S value)
 
 /*tree traversing using reverse_Inorder approach i.e. we will traverse right subtree and then left subtree of the current */
 template<class S>
-bool tree<S>::reverse_Inorder(node<S>* p,const int &count)				
+bool tree<S>::reverse_Inorder(node<S>* p,const int &count,bool &found_status)				
 {
 	/* this will be incremented and compared to count and when they are equal we will how that our kth largest node is found */
 	static int i=1;
 
 	/* this is a flag whih will tell if the value exist or not */
-	static bool found_status= false;
-	if(p==NULL|| count <1)  
+	if(p==NULL || count <=0)  
 	{
 		return found_status ;
 	}
 	
-	reverse_Inorder(p->right,count);
+	reverse_Inorder(p->right,count,found_status);
 	
 	if(i==count)
 	{
 		cout<<"node value is\t"<<p->data<<endl;
 		found_status=true;
+		/*this is an empty function just to break the recurrance*/
+		breaker();
 	}
 	i++;
 	
-	reverse_Inorder(p->left,count);
+	reverse_Inorder(p->left,count,found_status);
 }
+
+void breaker() {}
 
 /*main function*/
 int main(int argc, char const *argv[])
@@ -154,13 +158,17 @@ int main(int argc, char const *argv[])
 	obj.insert(7);
 	obj.insert(10);
 	
+	bool found_status=false;
+
 	/* value of K is taken */
 	int K;
 	cout<<"Enter value of K\t";
 	cin>>K;
 
 	/* procedure called, if it wont find the node it will return false */
-	if(!obj.reverse_Inorder(obj.getroot(),K))
+	obj.reverse_Inorder(obj.getroot(),K,found_status);
+	
+	if(!found_status)
 	{
 		cout<<"Element not found\n"<<endl;
 	}
