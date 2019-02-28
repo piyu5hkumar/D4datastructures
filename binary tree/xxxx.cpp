@@ -72,23 +72,29 @@ void tree<C>::createTree()
 
 /* Postorder approach to delete the full tree */
 template<class C>
-void tree<C> :: del_tree(node<C> *r)
+bool tree<C> :: del__leaf_value(node<C> *r)
 {
 
 /* check if the current root is NULL or not*/	
 	
 	if(r==NULL)
 	{
-		return;
+		return true;
 	}
 /* if not then traverse its left and right child and atlast delete the desired node */ 
+	else if(del__leaf_value(r->left) & del__leaf_value(r->right))
+	{
+		if(r->data == value)
+		{
+			node *temp= r;
+			r=NULL;
+			delete(temp);
+		}
+		return false; 
+	}
 	else
 	{
-		del_tree(r->left);
-		del_tree(r->right);
-		cout<<"\ndeleted\t"<<r->data;
-		delete(r);
-		r=NULL;
+		return false;
 	}
 }
 
