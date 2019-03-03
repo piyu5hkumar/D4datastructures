@@ -2,8 +2,7 @@
 
 /*
 
-C++ program to delete an entire binary tree.
-
+C++ program to delete leaf nodes with value as x
 */
 
 using namespace std;
@@ -38,8 +37,10 @@ class tree:public node<C>
 	public:
 		tree();
 		node<C>* getRoot();
+		void setRoot(node<C>*);
 		void createTree();
-		void del_tree(node<C> *);
+		void inorder(node<C>*);
+		node<C>* del_leaf_value(node<C>*,const int&);
 };
 
 /* tree class default constructor.As soon as the object will be made its root will be pointed to NULL */
@@ -58,6 +59,13 @@ node<C>* tree<C> :: getRoot()
 	return root;
 }
 
+/* A setter function to set the root of the tree */
+template<class C>
+void tree<C>::setRoot(node<C>*p)
+{
+	root=p;
+}
+
 /* this will create the tree in the example we just shown */
 template<class C>
 void tree<C>::createTree()
@@ -65,37 +73,50 @@ void tree<C>::createTree()
 	root=new node<C>(10);
 	
 	root->left=new node<C>(3);
+	root->left->right=new node<C>(10);
 	root->right=new node<C>(6);
-	root->right->left=new node<C>(-2);
-	root->right->right=new node<C>(1);
+	root->right->left=new node<C>(10);
+	root->right->right=new node<C>(4);
+}
+
+template<class C>
+void tree<C>::inorder(node<C> *r)
+{
+	if (r==NULL) {
+		return;
+	}
+	else
+	{
+		inorder(r->left);
+		cout<<r->data<<"\t";
+		inorder(r->right);
+	}
+	
+	
 }
 
 /* Postorder approach to delete the full tree */
 template<class C>
-bool tree<C> :: del__leaf_value(node<C> *r)
+node<C>* tree<C>::del_leaf_value(node<C>*r,const int& value)
 {
-
-/* check if the current root is NULL or not*/	
-	
 	if(r==NULL)
 	{
-		return true;
+		return NULL;
 	}
-/* if not then traverse its left and right child and atlast delete the desired node */ 
-	else if(del__leaf_value(r->left) & del__leaf_value(r->right))
+	
+	r->left=del_leaf_value(r->left,value);
+	r->right=del_leaf_value(r->right,value);
+
+	if(r->left==NULL && r->right==NULL && r->data == value)
 	{
-		if(r->data == value)
-		{
-			node *temp= r;
-			r=NULL;
-			delete(temp);
-		}
-		return false; 
+		delete(r);
+		return NULL;
 	}
 	else
 	{
-		return false;
+		return r;
 	}
+	
 }
 
 int main()
@@ -105,7 +126,9 @@ int main()
 	value=46;
 	
 	obj.createTree();
-	obj.del_tree(obj.getRoot());
-
+	obj.inorder(obj.getRoot());
+	cout<<"\n";
+	obj.setRoot(obj.del_leaf_value(obj.getRoot(),10));
+	obj.inorder(obj.getRoot());
 	return 0;
 }
