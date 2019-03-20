@@ -1,0 +1,1 @@
+NOTE :- cant be implemented with any container which do not support iterator like, stack and queue.
