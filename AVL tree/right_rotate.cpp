@@ -110,9 +110,9 @@ node* tree::right_rotate(node *pred)
 {
     node *x=pred->left;
     pred->left=pred->left->left;
-    node *gamma = pred->left->right;
+    node *beta = pred->left->right;
     pred->left->right=x;
-    x->left=gamma;
+    x->left=beta;
     return pred->left;
 }
 
@@ -120,9 +120,9 @@ node* tree::left_rotate(node *pred)
 {
     node *x=pred->right;
     pred->right=pred->right->right;
-    node *beta=pred->right->left;
+    node *alpha=pred->right->left;
     pred->right->left=x;
-    x->right=beta;
+    x->right=alpha;
     return pred->right;
 }
 
