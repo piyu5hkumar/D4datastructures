@@ -38,39 +38,39 @@ void add(struct list *l,int v,int weight)
 
 int main()
 {
-    int n,adjv,weight,i;
+    int n,v,weight,i;
     printf("Enter total number of vertices\t");
     scanf("%d",&n);
 
 /* array of list */
-	struct list v[n]; 
+	struct list adjL[n]; 
 
 /* initializing each head and tail as we cant intialize default values in structure */
     for(i=0;i<n;i++)
 	{
-		(v[i]).head=NULL;
-		(v[i]).tail=NULL;
+		(adjL[i]).head=NULL;
+		(adjL[i]).tail=NULL;
 	}
 
 	for(i=0;i<n;i++)
 	{
-		printf("Enter adjacent vertices of v%d enter -1 when no adjacent vertices remains\n",i+1);
+		printf("Enter adjacent vertices of v%d enter -1 when no adjacent vertices remains\n",i);
         printf("\n\nVertex number,weight\n");
 
-        scanf("%d",&adjv);
-        while(adjv>0)
+        scanf("%d",&v);
+        while(v>-1)
         {
             scanf("%d",&weight);
-            add(&(v[i]),adjv,weight);  //we are passing address of list '.' we are saving space
-            scanf("%d",&adjv);
+            add(&(adjL[i]),v,weight);  //we are passing address of list '.' we are saving space
+            scanf("%d",&v);
         }
 	}
 
 	printf("your graph is following\n");
 	for(i=0;i<n;i++)
     {
-        printf("vertices connected to v%d are \n",i+1);
-        temp=(v[i]).head;
+        printf("vertices connected to v%d are \n",i);
+        temp=(adjL[i]).head;
         while(temp)
         {
             printf("vertex = %d\t",temp->vertex);

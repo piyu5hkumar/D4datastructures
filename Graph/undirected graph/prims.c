@@ -36,18 +36,10 @@ void add(struct list *l,int v,int weight)
     }
 }
 
+/* this will find the minimun of available weights */
 int find_min_cost_vertex(int *found,int *weight,int size)
 {
-    int i,min_vertex,min_weight;
-    
-    for(i=0;i<size;i++)
-    {
-        if(found[i]==0)
-        {
-            min_weight = weight[i];
-            break;
-        }
-    }
+    int i,min_vertex,min_weight=INT_MAX;
 
     for(i=0;i<size;i++)
     {
@@ -60,7 +52,7 @@ int find_min_cost_vertex(int *found,int *weight,int size)
     return min_vertex;
 }
 
-struct list *prims(struct list *v,int size)
+struct list *prims(struct list *adjL,int size)
 {
     struct list mst;
     int found[size],i;
@@ -82,82 +74,63 @@ struct list *prims(struct list *v,int size)
     {
         
         min=find_min_cost_vertex(found,weight,size);
-
+        printf("weight found = %d\n",weight[min]);
         total_weight+=weight[min];
         add(&mst,min,weight[min]);
         found[min]=1;
-        temp=v[min].head;
+        temp=adjL[min].head;
         while(temp)
         {
-            weight[temp->vertex]=temp->weight;
+            //update the weight if new edge weight is lesser else leave it
+            if(temp->weight<weight[temp->vertex])
+            {
+                weight[temp->vertex]=temp->weight;
+            }
             temp=temp->adj;
         }
 
         inserted++;
     }
+    printf("\ntotal weight is %d\n",total_weight);
     return mst.head;
 }
 int main()
 {
-    int n,adjv,weight,i;
-    printf("Enter total number of vertices\t");
+    int n,v,weight,i;
+    printf("Enter total number of verteces\t");
     scanf("%d",&n);
 
 /* array of list */
-	struct list v[n]; 
+	struct list adjL[n]; 
 
 /* initializing each head and tail as we cant intialize default values in structure */
     for(i=0;i<n;i++)
 	{
-		(v[i]).head=NULL;
-		(v[i]).tail=NULL;
+		(adjL[i]).head=NULL;
+		(adjL[i]).tail=NULL;
 	}
 
-	for(i=0;i<n;i++)
-	{
-		printf("Enter adjacent vertices of v%d enter -1 when no adjacent vertices remains\n",i);
-        printf("\n\nVertex number,weight\n");
-		fflush(stdin);
-        scanf("%d",&adjv);
-        while(adjv>0)
+    printf("\nEnter your adjacency list\n\n");
+    
+    printf("\nEnter -1 in case there is no vertex left for adjacency\n");
+    for(i=0;i<n;i++)
+    {
+        printf("Enter vertices and their weight adjacent to vertex v%d\n",i);
+        scanf("%d",&v);
+        while(v>-1)
         {
-        	//fflush(stdin);
             scanf("%d",&weight);
-            add(&(v[i]),adjv,weight);  //we are passing address of list '.' we are saving space
-            scanf("%d",&adjv);
+            add(&adjL[i],v,weight);
+            scanf("%d",&v);
         }
-	}
-
-    // add(&v[0],1,2);
-    // add(&v[0],2,8);
-    // add(&v[0],3,4);
-    // add(&v[0],4,6);
-	
-    // add(&v[1],0,2);
-    // add(&v[1],2,7);
-    // add(&v[1],3,4);
-    // add(&v[1],4,6);
-
-    // add(&v[2],0,8);
-    // add(&v[2],1,7);
-    // add(&v[2],3,9);
-    // add(&v[2],4,8);
-
-    // add(&v[3],0,4);
-    // add(&v[3],1,4);
-    // add(&v[3],2,9);
-    // add(&v[3],4,5);
-
-    // add(&v[4],0,6);
-    // add(&v[4],1,6);
-    // add(&v[4],2,8);
-    // add(&v[4],3,5);
+        
+    }
 
     printf("your graph is following\n");
 	for(i=0;i<n;i++)
     {
         printf("vertices connected to v%d are \n",i);
-        temp=(v[i]).head;
+        temp=(adjL[i]).head;
         while(temp)
         {
             printf("vertex = %d\t",temp->vertex);
@@ -165,8 +138,12 @@ int main()
             temp=temp->adj;
         }
     }
-
-    temp= prims(v,n);
+    
+	printf("\n\n");
+    
+	temp= prims(adjL,n);
+	
+	printf("\n\n");
 	while(temp)
 	{
 		printf("%d\t",temp->vertex);
