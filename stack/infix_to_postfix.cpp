@@ -31,6 +31,13 @@ int main()
 		string str;
 		cin>>str;
 		s.push('_');
+		// this push is important 
+		//because if by chance first an operator comes(instead of '(' ) than it must to be compared with stack
+		//if stack woukd be empty then the program will halt
+		//this i why we added a character having minimum precedance(given by me)
+		//so that if any operator comes at very first not '(' ,than it will be comapred with the stack top i.e,'-'
+		//and since'_' precedance is low that means the operator will be pushed
+		
 		for(int i=0;str[i]!='\0';i++)
 		{
 			if(97<=str[i]&&122>=str[i])
