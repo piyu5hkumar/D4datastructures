@@ -1,7 +1,4 @@
-/*
-this program is only applicable for deleting nodes
-which has two child 
-*/
+
 #include<stdio.h>
 #include<stdlib.h>
 typedef struct node node;
@@ -11,6 +8,8 @@ struct node
     node *left;
     node *right;
 }*root = NULL,*temp = NULL;
+
+
 node* new_node(int x)
 {
     temp = (node*)malloc(sizeof(node));
@@ -19,6 +18,8 @@ node* new_node(int x)
     temp->data=x;
     return temp;
 }
+
+
 void insert(int x)
 {
     if(root==NULL)
@@ -42,6 +43,8 @@ void insert(int x)
     }
     
 }
+
+
 void inorder(node *r)
 {
     if(r==NULL)
@@ -50,6 +53,8 @@ void inorder(node *r)
     printf("%d\t",r->data);
     inorder(r->right);
 }
+
+
 node* rightmost(node *r)
 {
     if(r->right==NULL)
@@ -67,58 +72,79 @@ node* rightmost(node *r)
     return predecessor;    
     */
 }
+
+
+void freemem(node *prev,node *current,node *tobepointed)
+{
+    if(prev==NULL)
+    {
+        temp=root;
+        root=tobepointed;
+        free(temp);
+    }
+    else
+    {
+        if(prev->left==current)
+            prev->left=tobepointed;
+        else
+            prev->right=tobepointed;
+    }
+    free(current);
+}
+
 void delete(int x)
 {
     node *current = root;
-    node *pred=NULL;
+    node *prev=NULL;
     node *rchild;
     while(current)
     {
         if(x==current->data)
-        { 
-            //step 1
-            rchild=rightmost(current->left);
-            printf("rightmost child is %d\n",rchild->data);
+        {
+            //case 1, no child
+            if(current->left==NULL&&current->right==NULL)
+            {
+                freemem(prev,current,NULL);
+            }
+
+            //case 2, one child
+            else if((current->left==NULL ^ current->right==NULL)==1)
+            {
+                if(current->left!=NULL)
+                    freemem(prev,current,current->left);
+                else
+                    freemem(prev,current,current->right);
+            }
+
+            //case 3, two child
+            else 
+            {
+                //step 1
+                rchild=rightmost(current->left);
+                printf("rightmost child is %d\n",rchild->data);
+                
+                //step 2
+                rchild->right=current->right;
+
+                //step 3 and step 4
+                freemem(prev,current,current->left);
+
+            }
             
-            //step 2
-            rchild->right=current->right;
-
-            if(pred!=NULL) // it means the node to be deleted is not root
-            {
-                //step 3
-                if(pred->right==current)
-                    pred->right=current->left;
-                else 
-                    pred->left=current->left;
-                
-                //step 4
-                current=NULL;
-                free(current);
-            }
-            else // that means the node to be deleted is a root
-            {
-                temp=root;
-                
-                //step 3
-                root=current->left;
-
-                //step 4
-                //free(temp);
-            }
             break;
         }
 
         //always assign predeccor just before shifting
-        pred =current;
+        prev =current;
         
         if(x<current->data)
             current=current->left;
         else
             current=current->right;
         
-        
     }
 }
+
 
 void main()
 {
@@ -135,15 +161,28 @@ void main()
     insert(40);
     inorder(root);
     printf("\n");
-    printf("deleting 15\n");
+
+    printf("deleting 12\n"); //no child node
+    delete(12);
+    inorder(root);
+    printf("\n");
+    
+    printf("deleting 5\n"); //one child node
+    delete(5);
+    inorder(root);
+    printf("\n");
+
+    printf("deleting 15\n"); //two child node
     delete(15);
     inorder(root);
     printf("\n");
-    printf("deleting 10\n");
+
+    printf("deleting 10\n"); //two child node
     delete(10);
     inorder(root);
     printf("\n");
-    printf("deleting 0\n");
+    
+    printf("deleting 0\n"); //two child node
     delete(0);
     inorder(root);
     printf("\n");
