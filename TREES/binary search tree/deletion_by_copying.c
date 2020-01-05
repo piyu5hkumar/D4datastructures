@@ -1,7 +1,3 @@
-/*
-this program is only applicable for deleting nodes
-which has two child 
-*/
 #include<stdio.h>
 #include<stdlib.h>
 typedef struct node node;
@@ -103,13 +99,13 @@ void delete(int x)
     {
         if(x==current->data)
         { 
-            //case 1 no child
+            //case 1, no child
             if(current->left==NULL && current->right==NULL)
             {
                 freemem(prev,current,NULL);
             }
             
-            //case 2
+            //case 2, one child
             else if((current->left==NULL ^ current->right==NULL)==1)
             {
                 if(current->left!=NULL)
@@ -117,7 +113,7 @@ void delete(int x)
                 else
                     freemem(prev,current,current->right);
             }  
-            //case 3  
+            //case 3, two child  
             else
             {
                 //step 1
