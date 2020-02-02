@@ -49,7 +49,6 @@ void insert(int x)
         if (x > prev->data)
         {
             node *newNode = createNode(x);
-            newNode->left = NULL;
             newNode->right = prev->right;
             newNode->rightThread = true;
 
@@ -59,7 +58,6 @@ void insert(int x)
         else
         {
             node *newNode = createNode(x);
-            newNode->left = NULL;
             newNode->right = prev;
             newNode->rightThread = true;
 
@@ -98,6 +96,8 @@ void traversal()
 void main()
 {
     insert(6);
+    insert(9);
+    insert(12);
     insert(3);
     insert(5);
     insert(1);
