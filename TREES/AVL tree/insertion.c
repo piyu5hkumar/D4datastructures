@@ -64,6 +64,11 @@ node *right_rotate(node *r)
     return r_left;
 }
 
+int balance_factor(node *r)
+{
+    return get_height(r->left) - get_height(r->right);
+}
+
 node *insert(node *r, int value)
 {
     if (r == NULL)
@@ -78,12 +83,11 @@ node *insert(node *r, int value)
             r->right = insert(r->right, value);
 
         r->height = max(get_height(r->left), get_height(r->right)) + 1;
-        int balance_factor = get_height(r->left) - get_height(r->right);
-        if (balance_factor < -1 || balance_factor > 1)
+        if (balance_factor(r) < -1 || balance_factor(r) > 1)
         {
             printf("height disturbed at %d for value %d\n", r->data, value);
         }
-        if (balance_factor < -1) // right
+        if (balance_factor(r) < -1) // right
         {
             /*
             if (value > r->right->data) // right right
@@ -102,7 +106,7 @@ node *insert(node *r, int value)
             }
             r = left_rotate(r);
         }
-        else if (balance_factor > 1) //left
+        else if (balance_factor(r) > 1) //left
         {
             /*
             if (value < r->left->data) //left left
