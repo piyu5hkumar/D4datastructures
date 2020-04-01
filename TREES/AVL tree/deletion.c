@@ -149,7 +149,7 @@ node *remove_node(node *r, int value)
     else
     {
         //no child case
-        if (r->left == NULL || r->right == NULL)
+        if (r->left == NULL && r->right == NULL)
         {
             free(r);
             // no need to check balancing here
@@ -179,7 +179,9 @@ node *remove_node(node *r, int value)
         // two child case
         else
         {
+            printf("two child case\n");
             node *successor = minimum(r->right);
+            printf("\nsuccessor is %d\n",successor->data);
             r->data = successor->data;
             r->right = remove_node(r->right, successor->data);
         }
@@ -240,6 +242,6 @@ void main()
 
     inorder(root);
     printf("\nafter deletion\n\n");
-    root = remove_node(root, 40);
+    root = remove_node(root, 30);
     inorder(root);
 }
