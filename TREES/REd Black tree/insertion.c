@@ -235,12 +235,12 @@ void inorder(node *r)
 }
 void main()
 {
-    // insert(20);
-    // insert(1);
-    // insert(5);
-    // insert(-55);
-    // insert(100);
-    // insert(99);
+    insert(20);
+    insert(1);
+    insert(5);
+    insert(-55);
+    insert(100);
+    insert(99);
 
     insert(7); 
     insert(6); 
