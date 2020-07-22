@@ -21,7 +21,34 @@ void heapifyUp(int *heap, int currentNodeIndex)
     else
     {
         exchange(heap, currentNodeIndex, parentIndex);
-        heapify(heap, parentIndex);
+        heapifyUp(heap, parentIndex);
+    }
+}
+
+void heapifyDown(int *heap, int parentIndex, int lastIndex) //this is what we're gonna use
+{
+    int leftChildIndex = parentIndex << 1;
+    int rightChildIndex = parentIndex << 1 | 1;
+    int maxValueIndex = parentIndex;
+
+    if (leftChildIndex <= lastIndex && heap[leftChildIndex] > heap[maxValueIndex])
+    {
+        maxValueIndex = leftChildIndex;
+    }
+
+    if (rightChildIndex <= lastIndex && heap[rightChildIndex] > heap[maxValueIndex])
+    {
+        maxValueIndex = rightChildIndex;
+    }
+
+    if (maxValueIndex != parentIndex)
+    {
+        exchange(heap, parentIndex, maxValueIndex);
+        heapifyDown(heap, maxValueIndex, lastIndex);
+    }
+    else
+    {
+        return;
     }
 }
 
@@ -45,6 +72,23 @@ void show(int *heap, int lastIndex)
         printf("%d\t", heap[i]);
     }
     printf("\n");
+}
+
+void buildMaxHeap(int *arr, int size)
+{
+    /*
+        -if it was a 0 based array
+            then the leaves would have started from size/2
+            or we can say that from size/2 - 1 we have non leaf nodes. 
+            
+        -it is a 1 based array
+            so the leaves starts from size/2 + 1
+            or we can say that from size/2 to 1 we have non leaf nodes.
+    */
+    for (int i = size / 2; i >= 1; i--) 
+    {
+        heapifyDown(arr, i, size);
+    }
 }
 void main()
 {
@@ -92,4 +136,10 @@ void main()
     show(heap, lastIndex);
     insert(heap, 15, &lastIndex);
     show(heap, lastIndex);
+
+    printf("\n\nbuilding max heap from given array {4, 1, 3, 2, 16, 9, 10, 14, 8, 7}\n\n");
+
+    int arr[] = {-999, 4, 1, 3, 2, 16, 9, 10, 14, 8, 7}; //since we are not considering 0 index
+    buildMaxHeap(arr, 10);
+    show(arr, 10);
 }
