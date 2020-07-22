@@ -11,7 +11,7 @@ void exchange(int *heap, int index1, int index2)
 
 void heapifyUp(int *heap, int currentNodeIndex)
 {
-    if (currentNodeIndex == 0) //not a possible node
+    if (currentNodeIndex == 1) //not a possible node
         return;
 
     int parentIndex = currentNodeIndex >> 1;
@@ -80,16 +80,42 @@ void buildMaxHeap(int *arr, int size)
         -if it was a 0 based array
             then the leaves would have started from size/2
             or we can say that from size/2 - 1 we have non leaf nodes. 
-            
+
         -it is a 1 based array
             so the leaves starts from size/2 + 1
             or we can say that from size/2 to 1 we have non leaf nodes.
     */
-    for (int i = size / 2; i >= 1; i--) 
+    for (int i = size / 2; i >= 1; i--)
     {
         heapifyDown(arr, i, size);
     }
 }
+
+int peak(int *heap, int lastIndex)
+{
+    if (lastIndex <= 0)
+    {
+        printf("heap is empty returning garbage value");
+        return -999;
+    }
+    else
+        return heap[1];
+}
+
+void extractMax(int *heap, int *lastIndex)
+{
+    if (*lastIndex <= 0)
+    {
+        printf("Nothing to extract, heap is empty");
+    }
+    else
+    {
+        heap[1] = heap[*lastIndex];
+        (*lastIndex)--;
+        heapifyDown(heap, 1, *lastIndex);
+    }
+}
+
 void main()
 {
     int lastIndex = 0;
@@ -123,23 +149,38 @@ void main()
         I've taken lastIndex as 0 because we are increamenting and then inserting,
         so the first element should be inserted at index 1
     */
-    int *heap = (int *)malloc(sizeof(int) * MAX_SIZE);
-    insert(heap, 10, &lastIndex);
-    show(heap, lastIndex);
-    insert(heap, 5, &lastIndex);
-    show(heap, lastIndex);
-    insert(heap, 3, &lastIndex);
-    show(heap, lastIndex);
-    insert(heap, 2, &lastIndex);
-    show(heap, lastIndex);
-    insert(heap, 4, &lastIndex);
-    show(heap, lastIndex);
-    insert(heap, 15, &lastIndex);
-    show(heap, lastIndex);
+    // int *heap = (int *)malloc(sizeof(int) * MAX_SIZE);
+    // insert(heap, 10, &lastIndex);
+    // show(heap, lastIndex);
+    // insert(heap, 5, &lastIndex);
+    // show(heap, lastIndex);
+    // insert(heap, 3, &lastIndex);
+    // show(heap, lastIndex);
+    // insert(heap, 2, &lastIndex);
+    // show(heap, lastIndex);
+    // insert(heap, 4, &lastIndex);
+    // show(heap, lastIndex);
+    // insert(heap, 15, &lastIndex);
+    // show(heap, lastIndex);
 
     printf("\n\nbuilding max heap from given array {4, 1, 3, 2, 16, 9, 10, 14, 8, 7}\n\n");
 
     int arr[] = {-999, 4, 1, 3, 2, 16, 9, 10, 14, 8, 7}; //since we are not considering 0 index
-    buildMaxHeap(arr, 10);
-    show(arr, 10);
+    int arrSize = 10;
+    buildMaxHeap(arr, arrSize);
+    show(arr, arrSize);
+    printf("peaking %d\n", peak(arr, arrSize));
+    extractMax(arr, &arrSize);
+    show(arr, arrSize);
+    printf("peaking %d\n", peak(arr, arrSize));
+    extractMax(arr, &arrSize);
+    show(arr, arrSize);
+    printf("peaking %d\n", peak(arr, arrSize));
+    extractMax(arr, &arrSize);
+    show(arr, arrSize);
+    printf("peaking %d\n", peak(arr, arrSize));
+
+    // checking insert one more time
+    insert(arr, 69, &arrSize);
+    show(arr, arrSize);
 }
