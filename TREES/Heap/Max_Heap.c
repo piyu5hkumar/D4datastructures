@@ -9,7 +9,7 @@ void exchange(int *heap, int index1, int index2)
     heap[index2] = temp;
 }
 
-void heapify(int *heap, int currentNodeIndex)
+void heapifyUp(int *heap, int currentNodeIndex)
 {
     if (currentNodeIndex == 0) //not a possible node
         return;
@@ -34,7 +34,7 @@ void insert(int *heap, int value, int *lastIndex)
     }
     (*lastIndex)++;
     heap[*lastIndex] = value;
-    heapify(heap, *lastIndex);
+    heapifyUp(heap, *lastIndex);
 }
 
 void show(int *heap, int lastIndex)
