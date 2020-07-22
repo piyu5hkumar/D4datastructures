@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #define MAX_SIZE 1000
 
-void swap(int *heap, int index1, int index2)
+void exchange(int *heap, int index1, int index2)
 {
     int temp = heap[index1];
     heap[index1] = heap[index2];
@@ -11,17 +11,17 @@ void swap(int *heap, int index1, int index2)
 
 void heapify(int *heap, int currentNodeIndex)
 {
-    if (currentNodeIndex == 0) //current node is root
+    if (currentNodeIndex == 0) //not a possible node
         return;
 
-    int parent = currentNodeIndex >> 1;
+    int parentIndex = currentNodeIndex >> 1;
 
-    if (heap[currentNodeIndex] < heap[parent]) //it's smaller than its parent, great!!!
+    if (heap[currentNodeIndex] < heap[parentIndex]) //it's smaller than its parentIndex, great!!!
         return;
     else
     {
-        swap(heap, currentNodeIndex, parent);
-        heapify(heap, parent);
+        exchange(heap, currentNodeIndex, parentIndex);
+        heapify(heap, parentIndex);
     }
 }
 
@@ -48,7 +48,7 @@ void show(int *heap, int lastIndex)
 }
 void main()
 {
-    int lastIndex = 0; 
+    int lastIndex = 0;
     /*
         heap should start from index 1 
         because of the following 2 problems
@@ -92,5 +92,4 @@ void main()
     show(heap, lastIndex);
     insert(heap, 15, &lastIndex);
     show(heap, lastIndex);
-    
 }
