@@ -111,7 +111,7 @@ void buildMaxHeap(int *arr, int size)
 	}
 }
 
-int peak(int *heap, int size)
+int peek(int *heap, int size)
 {
 	if (size <= 0)
 	{
@@ -133,6 +133,17 @@ void extractMax(int *heap, int *size)
 		heap[0] = heap[*(size) - 1];
 		(*size)--;
 		heapifyDown(heap, 0, *size);
+	}
+}
+
+void heapSort(int *heap, int size)
+{
+	int root;
+	while (size != 0)
+	{
+		root = peek(heap, size);
+		extractMax(heap, &size);
+		heap[size] = root;
 	}
 }
 
@@ -160,22 +171,25 @@ void main()
 	int arrSize = sizeof(arr) / sizeof(int);
 	buildMaxHeap(arr, arrSize);
 	show(arr, arrSize);
-	printf("peaking %d\n", peak(arr, arrSize));
+	printf("peeking %d\n", peek(arr, arrSize));
 	extractMax(arr, &arrSize);
 
 	show(arr, arrSize);
-	printf("peaking %d\n", peak(arr, arrSize));
+	printf("peeking %d\n", peek(arr, arrSize));
 	extractMax(arr, &arrSize);
 
 	show(arr, arrSize);
-	printf("peaking %d\n", peak(arr, arrSize));
+	printf("peeking %d\n", peek(arr, arrSize));
 	extractMax(arr, &arrSize);
 
 	show(arr, arrSize);
-	printf("peaking %d\n", peak(arr, arrSize));
+	printf("peeking %d\n", peek(arr, arrSize));
 
 	// checking insert one more time
 	insert(arr, 69, &arrSize);
 	show(arr, arrSize);
 
+	printf("\n\nSorting\n\n");
+	heapSort(arr, arrSize);
+	show(arr, arrSize);
 }
